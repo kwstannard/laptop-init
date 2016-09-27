@@ -1,0 +1,21 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: debian-8.3
+
+suites:
+  - name: default
+    run_list: laptop-init::default
+    attributes:
+      desktop:
+        user:
+          name: kwstannard
+          group: kwstannard
+          home: /home/kwstannard
+          uid: 1000
+          gid: 1000
