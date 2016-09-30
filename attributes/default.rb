@@ -1,18 +1,22 @@
-default = {
+overrides = {
   desktop: {
     display_manager: "i3wm",
   },
   rbenv: {
-    rubies: [],
-    gems: Hash.new do |h, k|
-      h[k] = [
-        { name: 'bundler' },
-        { name: 'pry' },
-      ]
-    end,
-    plugins: [
-      { git_url: 'git@github.com:tpope/rbenv-aliases' },
-      { git_url: 'git@github.com:tpope/rbenv-communal-gems' },
+    user_installs: [
+      { user: "kwstannard" }
     ],
+    user_rubies: ['2.1.7', '2.3.1'],
+    user_plugins: [
+      { name: 'aliases', git_url: 'https://github.com/tpope/rbenv-aliases' },
+      { name: 'communal', git_url: 'https://github.com/tpope/rbenv-communal-gems' },
+    ],
+    communal_gems: {
+      'bundler' => {},
+      'pry' => {},
+    },
   },
-}.merge(default || {})
+}
+overrides.each do |k,v|
+  default[k].merge! v
+end

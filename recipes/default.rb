@@ -14,11 +14,11 @@ include_recipe 'desktop::user'
 #include_recipe 'desktop::slack'
 #include_recipe 'desktop::vagrant'
 #include_recipe 'desktop::virtualbox'
-include_recipe 'desktop::hub'
+#include_recipe 'desktop::hub'
 
 #include_recipe 'laptop-init::iwlwifi'
-include_recipe 'laptop-init::ruby'
-#include_recipe 'laptop-init::i3'
+#include_recipe 'laptop-init::ruby'
+include_recipe 'laptop-init::i3'
 
 #package [
   #'vim',

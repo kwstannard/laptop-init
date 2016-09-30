@@ -1,4 +1,9 @@
-include_recipe 'desktop::stretch'
+include_recipe 'desktop::backports'
+package 'i3' do
+  options '-t jessie-backports'
+end
+
 package [
-  'i3'
+  'scrot',
+  'imagemagick'
 ]
