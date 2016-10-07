@@ -7,3 +7,4 @@ long_description 'Installs/Configures laptop-init'
 version          '0.1.0'
 
 depends 'desktop'
+depends 'dropbox'
