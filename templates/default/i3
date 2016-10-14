@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+i3config-gen > $HOME/.config/i3/config
+/usr/bin/i3

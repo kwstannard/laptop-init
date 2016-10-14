@@ -16,6 +16,9 @@ overrides = {
       'pry' => {},
     },
   },
+  home: default[:desktop][:user][:home],
+  group: default[:desktop][:user][:group],
+  user: default[:desktop][:user][:name],
 }
 overrides.each do |k,v|
   default[k].merge! v

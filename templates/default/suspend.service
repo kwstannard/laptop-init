@@ -1,0 +1,13 @@
+[Unit]
+Description=User suspend actions
+Before=sleep.target
+
+[Service]
+User=%I
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/home/<%= @user %>/bin/custom_locker
+ExecStartPost=/usr/bin/sleep 5
+
+[Install]
+WantedBy=sleep.target

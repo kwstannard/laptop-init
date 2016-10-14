@@ -1,0 +1,10 @@
+[Unit]
+Description=User resume actions
+After=suspend.target
+
+[Service]
+User=%I
+Type=simple
+
+[Install]
+WantedBy=suspend.target
