@@ -1,10 +1,10 @@
-overrides = {
+override.merge!({
   desktop: {
     display_manager: "i3wm",
   },
   rbenv: {
     user_installs: [
-      { user: "kwstannard" }
+      { user: normal[:desktop][:user][:name] }
     ],
     user_rubies: ['2.1.7', '2.3.1'],
     user_plugins: [
@@ -16,10 +16,14 @@ overrides = {
       'pry' => {},
     },
   },
-  home: default[:desktop][:user][:home],
-  group: default[:desktop][:user][:group],
-  user: default[:desktop][:user][:name],
-}
-overrides.each do |k,v|
-  default[k].merge! v
-end
+  home: normal[:desktop][:user][:home],
+  group: normal[:desktop][:user][:group],
+  user: normal[:desktop][:user][:name],
+
+  x_vars: {
+    key_delay: 250,
+    key_repeat_rate: 50,
+  },
+
+  remote_sources_dir: File.join(normal[:desktop][:user][:home], ".remote_sources")
+})

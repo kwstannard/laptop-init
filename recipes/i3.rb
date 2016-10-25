@@ -5,8 +5,13 @@ package [
   'imagemagick'
 ]
 
+apt_preference 'i3' do
+  pin 'release o=Debian Backports'
+  pin_priority '600'
+end
+
 package 'i3' do
-  version '4.12'
+  version '4.12-2~bpo8+1'
 end
 
 template "/usr/local/bin/i3" do

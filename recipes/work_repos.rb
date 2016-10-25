@@ -1,10 +1,6 @@
 u = node[:desktop][:user]
 
-file "/tmp/git_wrapper.sh" do
-  owner u[:name]
-  mode "0755"
-  content "#!/bin/sh\nexec /usr/bin/ssh -i #{u[:home]}/.ssh/id_rsa \"$@\""
-end
+include_recipe 'laptop-init::git_wrapper'
 
 node[:work][:repos].each do |r|
   path = File.join(u[:home], node[:work][:path], r[:name])

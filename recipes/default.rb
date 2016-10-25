@@ -7,7 +7,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe 'desktop::user'
+
+#include_recipe 'desktop::user'
 #include_recipe 'desktop::fonts'
 #include_recipe 'dropbox'
 #include_recipe 'desktop::apt'
@@ -25,7 +26,6 @@ include_recipe 'laptop-init::i3'
 ## TODO download files from remote
 #include_recipe 'laptop-init::oracle_instant_client'
 #include_recipe 'laptop-init::prax'
-# TODO synaptics settings
 
 #DONE
 #include_recipe 'laptop-init::firefox'
@@ -34,30 +34,35 @@ include_recipe 'laptop-init::i3'
 #include_recipe 'laptop-init::iwlwifi'
 #include_recipe 'laptop-init::googletalk'
 #include_recipe 'laptop-init::screen_locking'
+#include_recipe 'laptop-init::x'
+#include_recipe 'laptop-init::private_bashrc'
+#include_recipe 'laptop-init::googlefont'
 
-package [
-  'xbacklight',
-  'recode',
-  'fonts-symbola',
-  'fonts-freefont-otf',
-  'fonts-freefont-ttf',
-  'pidgin',
-  'libpq-dev',
-  'vim-gtk',
-  'nodejs',
-  'redis-server',
-  'libnotify-bin',
-  'xsel',
-  'dunst',
-  'keepassx',
-  'pavucontrol',
+package [ # base packages
+  #'xbacklight',
+  #'recode',
+  #'fonts-symbola',
+  #'fonts-freefont-otf',
+  #'fonts-freefont-ttf',
+  #'libnotify-bin',
+  #'xsel',
+  #'dunst',
+  #'pavucontrol',
+  #'chromium',
 ]
 
-private_bashrc = ""
-node[:private_env_vars].each {|k,v| private_bashrc += "export #{k}=\"#{v}\""}
-file "#{node[:desktop][:user][:home]}/.private_bashrc" do
-  content private_bashrc
-end
+package [ #work packages
+  #'nodejs',
+  #'redis-server',
+  #'libpq-dev',
+  #'jq',
+  #'rabbitmq-server',
+]
 
+package [ # personal packages
+  #'pidgin',
+  #'vim-gtk',
+  #'keepassx',
+]
 #include_recipe 'desktop::heroku'
 #include_recipe 'laptop-init::work_repos'
