@@ -182,8 +182,8 @@ end
 
 $common_binds = {
 # start a terminal
-"Return" => "exec i3-sensible-terminal",
-"Shift+Return" => "split h; exec i3-sensible-terminal; split v",
+"Return" => "exec konsole",
+"Shift+Return" => "split h; exec konsole; split v",
 
 "backslash" => "workspace 100: WorkConsole",
 
@@ -335,7 +335,7 @@ bindings.add("Shift+5", "workspace 5")
 
 $common_binds.each{|key,action| bindings.add(key, action) }
 
-min = 1; max = 4
-(min...max).each{|i| ProjectMode.new("Project #{max - i}", "$mod+#{(11 - i) % 10}")}
+min = 1; max = 5
+(min..max).each{|i| ProjectMode.new("Project #{max - i}", "$mod+#{(11 - i) % 10}")}
 
 puts base + modes + ProjectMode.text + bindings.to_config + $function_key_binds + other

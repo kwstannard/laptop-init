@@ -4,6 +4,9 @@ driver:
 
 provisioner:
   name: chef_solo
+  clients_path: /home/kwstannard/chef/node.json
+  cookbooks_path:
+    - /home/kwstannard/chef/cookbooks
 
 platforms:
   - name: debian-8.3
@@ -11,11 +14,11 @@ platforms:
 suites:
   - name: default
     run_list: laptop-init::default
-    attributes:
-      desktop:
-        user:
-          name: kwstannard
-          group: kwstannard
-          home: /home/kwstannard
-          uid: 1000
-          gid: 1000
+    #attributes:
+      #desktop:
+        #user:
+          #name: kwstannard
+          #group: kwstannard
+          #home: /home/kwstannard
+          #uid: 1000
+          #gid: 1000

@@ -1,3 +1,4 @@
+require 'pry'; binding.pry
 override.merge!({
   desktop: {
     display_manager: "i3wm",
