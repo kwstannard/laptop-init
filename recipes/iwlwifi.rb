@@ -1,10 +1,10 @@
 include_recipe 'debian'
-package 'firmware-linux-nonfree' do
+package ['firmware-linux-nonfree', 'firmware-iwlwifi'] do
   action :upgrade
   notifies :run, 'execute[reload-iwlwifi-module]'
 end
 
 execute 'reload-iwlwifi-module' do
   command 'depmod -a; modprobe -r iwlwifi; modprobe iwlwifi'
-  action :nothing
+  #action :nothing
 end

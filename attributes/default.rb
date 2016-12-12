@@ -1,13 +1,17 @@
-require 'pry'; binding.pry
+#require 'pry'; binding.pry
 override.merge!({
   desktop: {
     display_manager: "i3wm",
+    browser: "firefox",
   },
   rbenv: {
     user_installs: [
-      { user: normal[:desktop][:user][:name] }
+      {
+        user: normal[:desktop][:user][:name],
+        global: '2.3',
+      }
     ],
-    user_rubies: ['2.1.7', '2.3.1'],
+    user_rubies: ['2.2.5', '2.3.1', '2.3.3'],
     user_plugins: [
       { name: 'aliases', git_url: 'https://github.com/tpope/rbenv-aliases' },
       { name: 'communal', git_url: 'https://github.com/tpope/rbenv-communal-gems' },

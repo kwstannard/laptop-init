@@ -8,5 +8,11 @@ git File.join(node['home'], '.fzf') do
 end
 
 execute File.join(node['home'],'.fzf','install') + ' --all' do
+  user node[:user]
+  group node[:group]
+  environment({
+    'HOME' => node[:home],
+    'USER' => node[:user],
+  })
   action :run
 end

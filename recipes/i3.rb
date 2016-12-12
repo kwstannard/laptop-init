@@ -2,7 +2,8 @@ include_recipe 'desktop::backports'
 
 package [
   'scrot',
-  'imagemagick'
+  'imagemagick',
+  'dunst',
 ]
 
 apt_preference 'i3' do
@@ -26,4 +27,13 @@ template "/usr/local/bin/i3config-gen" do
   owner node[:user]
   group node[:group]
   mode '0755'
+end
+
+directory File.join(node[:home], ".config", "dunst") { recursive true }
+
+file File.join(node[:home], ".config", "dunst", "dunstrc") do
+  action :create_if_missing
+  content `gunzip -c /usr/share/doc/dunst/dunstrc.example.gz`
+  owner node[:user]
+  group node[:group]
 end

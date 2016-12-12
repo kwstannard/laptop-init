@@ -1,20 +1,32 @@
-dir = File.join(node[:desktop][:user][:home], '.mozilla', 'firefox', '3expduhd.default')
+dir = File.join(node[:desktop][:user][:home], '.mozilla', 'firefox', 'kwstannard.default')
+directory dir do
+  recursive true
+  owner node[:user]
+  group node[:group]
+end
+
+cookbook_file File.join(dir, "..", "profiles.ini") do
+  owner node[:user]
+  group node[:group]
+  source "firefox_profiles.ini"
+end
 
 template File.join(dir, "extensions.json") do
   owner node[:user]
   group node[:group]
   source "extensions.json.erb"
-  variables node: node
+  variables home: node[:home]
 end
 template File.join(dir, "extensions.ini") do
   owner node[:user]
   group node[:group]
   source "extensions.ini.erb"
-  variables node: node
+  variables home: node[:home]
 end
 
 dir = File.join(node[:home], '.vimperator', 'plugin')
 directory dir do
+  recursive true
   owner node[:user]
   group node[:group]
 end

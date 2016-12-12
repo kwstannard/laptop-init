@@ -1,18 +1,21 @@
-u = node[:desktop][:user]
-
 include_recipe 'laptop-init::git_wrapper'
 
+directory File.join(node[:home], node[:work][:path]) do
+  user node[:user]
+  group node[:group]
+end
+
 node[:work][:repos].each do |r|
-  path = File.join(u[:home], node[:work][:path], r[:name])
+  path = File.join(node[:home], node[:work][:path], r[:name])
 
   r[:actions].each do |a|
     rbenv_script "#{r[:name]} #{a}" do
-      code a
+      code "echo HELLO WORLD; #{a}"
       cwd path
-      user u[:name]
+      user node[:user]
       environment ({
-        "HOME" => u[:home],
-        "USER" => u[:name],
+        "HOME" => node[:home],
+        "USER" => node[:user],
       })
       action :nothing
       subscribes :run, "git[#{path}]", :immediately
@@ -20,8 +23,8 @@ node[:work][:repos].each do |r|
   end
 
   git path do
-    user u[:name]
-    group u[:group]
+    user node[:name]
+    group node[:group]
     repository node[:work][:repository] + r[:name]
     ssh_wrapper "/tmp/git_wrapper.sh"
   end
