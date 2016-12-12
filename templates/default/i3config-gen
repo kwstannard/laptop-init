@@ -139,8 +139,6 @@ class ProjectMode
     bindings.add("Shift+4", "workspace #{@id}8")
     bindings.add("Shift+5", "workspace #{@id}9")
 
-    bindings.add("Ctrl+1", "rename workspace #{@id}1 to tmp, rename workspace to #{@id}1; rename workspace tmp to #{@id}
-
     bindings.add("minus", "mode \"default\"; workspace 1")
 
     $common_binds.each{|key,action| bindings.add(key, action) }
@@ -184,8 +182,8 @@ end
 
 $common_binds = {
 # start a terminal
-"Return" => "exec konsole --workdir $current_dir",
-"Shift+Return" => "split h; exec konsole --workdir $current_dir; split v",
+"Return" => "exec konsole",
+"Shift+Return" => "split h; exec konsole; split v",
 
 "backslash" => "workspace 100: WorkConsole",
 
