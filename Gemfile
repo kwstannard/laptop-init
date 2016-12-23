@@ -1,4 +1,10 @@
 source 'https://rubygems.org'
 
-gem "test-kitchen"
-gem "kitchen-vagrant"
+gem 'berkshelf', '~> 4'
+gem 'test-kitchen', '~> 1'
+gem 'kitchen-inspec'
+gem 'kitchen-docker'
+
+group :integration do
+  gem 'kitchen-vagrant', '~> 0.19'
+end

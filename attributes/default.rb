@@ -1,4 +1,3 @@
-#require 'pry'; binding.pry
 override.merge!({
   desktop: {
     display_manager: "i3wm",
@@ -30,5 +29,5 @@ override.merge!({
     key_repeat_rate: 50,
   },
 
-  remote_sources_dir: File.join(normal[:desktop][:user][:home], ".remote_sources")
+  #remote_sources_dir: File.join(normal[:desktop][:user][:home], ".remote_sources")
 })

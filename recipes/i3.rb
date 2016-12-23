@@ -37,3 +37,10 @@ file File.join(node[:home], ".config", "dunst", "dunstrc") do
   owner node[:user]
   group node[:group]
 end
+
+directory File.join(node[:home], ".config", "i3status") { recursive true }
+cookbook_file File.join(node[:home], '.config', 'i3status', 'config') do
+  owner node[:user]
+  group node[:group]
+  source 'i3status-config'
+end

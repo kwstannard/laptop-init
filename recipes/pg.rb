@@ -9,14 +9,10 @@ apt_repository 'postgresql' do
 end
 
 pgpkgs = %w(
-  postgresql
-  postgresql-contrib
+  postgresql-9.6
 )
-  #postgresql-client-9.6
-  #postgresql-contrib-9.6
   #postgresql-common
   #postgresql-client-common
-  #libpq5
   #libpq-dev
 #)
 
@@ -45,6 +41,11 @@ pgpkgs = %w(
   #action :upgrade
 #end
 
+apt_preference 'postgresql' do
+  glob '*'
+  pin 'release n=jessie-pgdg'
+  pin_priority '900'
+end
 package pgpkgs do
   action :upgrade
 #package 'postgresql-9.6' do

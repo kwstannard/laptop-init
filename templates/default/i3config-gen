@@ -35,7 +35,7 @@ for_window [class="Slack"] border none
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 12
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -185,8 +185,6 @@ $common_binds = {
 "Return" => "exec konsole",
 "Shift+Return" => "split h; exec konsole; split v",
 
-"backslash" => "workspace 100: WorkConsole",
-
 # kill focused window
 "Shift+q" => "kill",
 
@@ -237,10 +235,12 @@ $common_binds = {
 # focus the child container
 #"d" => "focus child",
 
+"backslash" => "workspace 100: WorkConsole",
 "p" => "workspace 14: Firefox",
 "o" => "workspace 13: Slack",
 "i" => "workspace 12: Pidgin",
 "u" => "workspace 11: Keepass",
+"y" => "workspace 101: Calendar",
 
 # reload the configuration file
 "Shift+c" => "reload",
@@ -304,6 +304,7 @@ assign [class="Firefox"] 14: Firefox
 assign [class="Slack"] 13: Slack
 assign [class="Pidgin"] 12: Pidgin
 assign [class="Keepassx"] 11: Keepass
+assign [class="Korganizer"] 101: Calendar
 assign [title="work_console"] 100: WorkConsole
 
 # startup apps
@@ -311,6 +312,7 @@ exec --no-startup-id keepassx #{ENV["KEEPASSX_DB"]}
 exec --no-startup-id firefox
 exec --no-startup-id slack
 exec --no-startup-id pidgin
+exec --no-startup-id korganizer
 
 exec --no-startup-id konsole --profile work_console
 

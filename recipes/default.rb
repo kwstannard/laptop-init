@@ -9,7 +9,7 @@
 
 
 include_recipe 'desktop::user'
-#include_recipe 'desktop::fonts'
+include_recipe 'desktop::fonts'
 #require 'pry'; binding.pry
 include_recipe 'dropbox'
 include_recipe 'desktop::apt'
@@ -69,6 +69,6 @@ package [ # personal packages
   'keepassx',
 ]
 include_recipe 'desktop::heroku'
-include_recipe 'laptop-init::git_repos'
+#include_recipe 'laptop-init::git_repos'
 
 execute "update-alternatives --set x-www-browser $(update-alternatives --list x-www-browser | grep #{node[:desktop][:browser]})"
