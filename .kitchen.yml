@@ -4,21 +4,12 @@ driver:
 
 provisioner:
   name: chef_solo
-  clients_path: /home/kwstannard/chef/attribs.json
-  cookbooks_path:
-    - /home/kwstannard/cookbooks
 
+verifier:
+  name: inspec
 platforms:
   - name: debian-8.3
 
 suites:
   - name: default
     run_list: laptop-init::default
-    attributes: {}
-      #desktop:
-        #user:
-          #name: kwstannard
-          #group: kwstannard
-          #home: /home/kwstannard
-          #uid: 1000
-          #gid: 1000
