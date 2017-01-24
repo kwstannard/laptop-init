@@ -7,23 +7,15 @@ package [
 ]
 
 apt_preference 'i3' do
+  glob 'i3*'
   pin 'release o=Debian Backports'
-  pin_priority '600'
+  pin_priority '900'
 end
+package %w(i3 i3status)
 
-package 'i3' do
-  version '4.12-2~bpo8+1'
-end
-
-template "/usr/local/bin/i3" do
-  source 'i3'
-  owner node[:user]
-  group node[:group]
-  mode '0755'
-end
-
-template "/usr/local/bin/i3config-gen" do
-  source 'i3config-gen'
+require_relative '../templates/default/i3config-gen'
+file File.join(node[:home], ".config", "i3", "config") do
+  content I3ConfigGen.call
   owner node[:user]
   group node[:group]
   mode '0755'
@@ -31,11 +23,10 @@ end
 
 directory File.join(node[:home], ".config", "dunst") { recursive true }
 
-file File.join(node[:home], ".config", "dunst", "dunstrc") do
-  action :create_if_missing
-  content `gunzip -c /usr/share/doc/dunst/dunstrc.example.gz`
+cookbook_file File.join(node[:home], ".config", "dunst", "dunstrc") do
   owner node[:user]
   group node[:group]
+  source 'dunstrc'
 end
 
 directory File.join(node[:home], ".config", "i3status") { recursive true }

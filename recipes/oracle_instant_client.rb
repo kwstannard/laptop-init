@@ -4,7 +4,7 @@ package %w[
 alien
 ]
 
-path = "/tmp/oracleic/"
+path = File.join(node['home'], 'pkgs', "oracleic")
 file_prefix = "oracle-instantclient11.2-"
 file_suffix = "-11.2.0.4.0-1.x86_64.rpm"
 
@@ -13,8 +13,8 @@ basic
 devel
 sqlplus
 ].each do |f|
-  file_path = path + file_prefix + f + file_suffix
-  final_path = path + file_prefix + f + "_11.2.0.4.0-2_amd64.deb"
+  file_path = File.join(path, file_prefix + f + file_suffix)
+  final_path = File.join(path, file_prefix + f + "_11.2.0.4.0-2_amd64.deb")
 
   execute "alien --to-deb #{file_path}" do
     cwd path

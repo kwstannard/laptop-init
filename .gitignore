@@ -13,6 +13,9 @@ pkg/
 /chef
 berks-cookbooks
 Berksfile.lock
+attribs.json
+node.json
+client.rb
 
 # Bundler
 Gemfile.lock

@@ -16,6 +16,7 @@ order += "load"
 order += "tztime local"
 #order += "tztime berlin"
 order += "volume master"
+order += "volume hdmi"
 
 wireless wlan0 {
         format_up = "W: (%quality at %essid, %bitrate) %ip"
@@ -29,7 +30,7 @@ ethernet eth0 {
 }
 
 battery 0 {
-        format = "%status %percentage %remaining %emptytime"
+        format = "%status %percentage %remaining"
         format_down = "No battery"
         path = "/sys/class/power_supply/BAT%d/uevent"
         low_threshold = 10
@@ -59,12 +60,12 @@ tztime berlin {
 }
 
 load {
-        format = "%5min"
+        format = "⚛: %5min"
 }
 
 cpu_temperature 0 {
-        format = "T: %degrees °C"
-        path = "/sys/devices/platform/coretemp.0/temp1_input"
+        format = "🌡 %degrees °C"
+        path = "/sys/class/thermal/thermal_zone1/temp"
 }
 
 disk "/" {
@@ -74,10 +75,10 @@ disk "/" {
 volume master {
         format = "🔊: %volume"
         format_muted = "🔇"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+        device = "pulse:1"
 }
 volume hdmi {
-  format = '🎧'
+  format = "🎧: %volume"
+  format_muted = "🎧  🔇"
+  device = "pulse:0"
 }

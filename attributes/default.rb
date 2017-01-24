@@ -1,3 +1,9 @@
+default['debian']['mirror'] = "http://httpredir.debian.org/debian"
+default['desktop']['user'] = {
+      group: 'default',
+      name: 'default',
+      home: '/home/default',
+    }
 override.merge!({
   desktop: {
     display_manager: "i3wm",

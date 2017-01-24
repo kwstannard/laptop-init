@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+connected_monitors="$(xrandr | grep "\<connected\>")"
+external_monitors="$(echo "$connected_monitors" | grep -o "^\(HDMI\|VGA\).")"
+internal_monitors="$(echo "$connected_monitors" | grep -o "^\(eDP\|DP\).")"
+
+if [ "$external_monitors" ]; then
+  xrandr $(echo $external_monitors | sed 's/.*/--output \0 --auto/') $(echo $internal_monitors | sed 's/.*/--output \0 --off/')
+else
+  xrandr --auto
+fi

@@ -15,31 +15,32 @@ include_recipe 'dropbox'
 include_recipe 'desktop::apt'
 include_recipe 'desktop::tar'
 include_recipe 'desktop::pulseaudio'
-#include_recipe 'desktop::slack'
+include_recipe 'desktop::slack'
 include_recipe 'desktop::vagrant'
 include_recipe 'desktop::virtualbox'
 include_recipe 'desktop::hub'
 include_recipe 'desktop::ssh'
 include_recipe 'desktop::synaptics'
 
-# TODO make sure correct 4.12 installs
+## TODO make sure correct 4.12 installs
 include_recipe 'laptop-init::i3'
 #include_recipe 'laptop-init::prax'
 
-#DONE
+##DONE
 #include_recipe 'laptop-init::firefox'
 include_recipe 'laptop-init::ruby'
 include_recipe 'laptop-init::iwlwifi'
 include_recipe 'laptop-init::googletalk'
-include_recipe 'laptop-init::screen_locking'
+#include_recipe 'laptop-init::screen_locking'
 include_recipe 'laptop-init::x'
 #include_recipe 'laptop-init::private_bashrc'
-#include_recipe 'laptop-init::googlefont'
+##include_recipe 'laptop-init::googlefont'
 include_recipe 'laptop-init::fzf'
 include_recipe 'laptop-init::pg'
 include_recipe 'laptop-init::mysql'
 include_recipe 'laptop-init::crystallang'
-#include_recipe 'laptop-init::oracle_instant_client'
+include_recipe 'laptop-init::oracle_instant_client'
+include_recipe 'laptop-init::stuff_for_monitors'
 
 package [ # base packages
   'xbacklight',
