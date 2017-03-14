@@ -21,7 +21,11 @@ file File.join(node[:home], ".config", "i3", "config") do
   mode '0755'
 end
 
-directory File.join(node[:home], ".config", "dunst") { recursive true }
+directory File.join(node[:home], ".config", "dunst") {
+  owner node[:user]
+  group node[:group]
+  recursive true
+}
 
 cookbook_file File.join(node[:home], ".config", "dunst", "dunstrc") do
   owner node[:user]
@@ -29,7 +33,11 @@ cookbook_file File.join(node[:home], ".config", "dunst", "dunstrc") do
   source 'dunstrc'
 end
 
-directory File.join(node[:home], ".config", "i3status") { recursive true }
+directory File.join(node[:home], ".config", "i3status") {
+  recursive true
+  owner node[:user]
+  group node[:group]
+}
 cookbook_file File.join(node[:home], '.config', 'i3status', 'config') do
   owner node[:user]
   group node[:group]

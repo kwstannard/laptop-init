@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+i3-msg -t get_workspaces |
+  jq -r '.[] | "\(.name) \(.focused)"' |
+  grep true |
+  sed 's/ \w*$//'

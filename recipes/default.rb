@@ -41,6 +41,7 @@ include_recipe 'laptop-init::mysql'
 include_recipe 'laptop-init::crystallang'
 include_recipe 'laptop-init::oracle_instant_client'
 include_recipe 'laptop-init::stuff_for_monitors'
+include_recipe 'laptop-init::tmux'
 
 package [ # base packages
   'xbacklight',
@@ -62,6 +63,7 @@ package [ #work packages
   'libpq-dev',
   'jq',
   'rabbitmq-server',
+  'dmg2img',
 ]
 
 package [ # personal packages

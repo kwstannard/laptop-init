@@ -21,7 +21,7 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<b>%a: %s</b>\n%b"
     
     # Sort messages by urgency.
     sort = yes
@@ -78,7 +78,7 @@
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
     # Set to 0 to disable.
-    idle_threshold = 0
+    idle_threshold = 0.01
     
     # Which monitor should the notifications be displayed on.
     monitor = 0
@@ -182,7 +182,7 @@
 [urgency_normal]
     background = "#184557"
     foreground = "#ffffff"
-    timeout = 10
+    timeout = 20
 
 [urgency_critical]
     background = "#900000"
@@ -213,9 +213,12 @@
 #    summary = "*"
 #    script = dunst_espeak.sh
 
-#[script-test]
-#    summary = "*script*"
-#    script = dunst_test.sh
+[script-test]
+    summary = "*script*"
+    script = /home/kwstannard/.config/dunst/dunst_test
+[calendar_meeting]
+    appname = Firefox
+    urgency = critical
 
 #[ignore]
 #    # This notification will not be displayed

@@ -51,6 +51,13 @@ Alt_L
 
       # Use Mouse+$mod to drag floating windows to their wanted position
       floating_modifier $mod
+
+      set $current_workspace "
+        $(i3-msg -t get_workspaces |
+          jq -r '.[] | "\(.name) \(.focused)"' |
+          grep true |
+          sed 's/ \w*$//')
+      "
       BASE
     end
 
@@ -99,12 +106,12 @@ Alt_L
           bindsym Escape mode "default"
       }
 
-      set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
+      set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
       mode "$mode_system" {
         bindsym l exec --no-startup-id custom_locker, mode "default"
           bindsym e exec --no-startup-id i3msg exit, mode "default"
           bindsym s exec --no-startup-id custom_locker && systemctl suspend, mode "default"
-      #    bindsym h exec --no-startup-id custom_locker && systemctl hibernate, mode "default"
+          bindsym h exec --no-startup-id custom_locker && systemctl hibernate, mode "default"
           bindsym r exec --no-startup-id systemctl reboot, mode "default"
           bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
