@@ -1,4 +1,7 @@
 include_recipe 'ruby_build'
+execute "Install ruby-build" do
+  action :run
+end
 include_recipe 'ruby_rbenv::user'
 
 home = node['desktop']['user']['home']
