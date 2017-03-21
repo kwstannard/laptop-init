@@ -220,6 +220,10 @@
     appname = Firefox
     urgency = critical
 
+[ignore]
+    appname = Konsole
+    format = ""
+
 #[ignore]
 #    # This notification will not be displayed
 #    summary = "foobar"
