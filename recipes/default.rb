@@ -42,6 +42,7 @@ include_recipe 'laptop-init::crystallang'
 include_recipe 'laptop-init::oracle_instant_client'
 include_recipe 'laptop-init::stuff_for_monitors'
 include_recipe 'laptop-init::tmux'
+include_recipe 'laptop-init::keepassx'
 
 package [ # base packages
   'xbacklight',
@@ -69,7 +70,6 @@ package [ #work packages
 package [ # personal packages
   'pidgin',
   'vim-gtk',
-  'keepassx',
 ]
 include_recipe 'desktop::heroku'
 #include_recipe 'laptop-init::git_repos'
