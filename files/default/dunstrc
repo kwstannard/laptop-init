@@ -219,6 +219,7 @@
 [calendar_meeting]
     appname = Firefox
     urgency = critical
+    format = "<span font='24'><b>%a: %s</b>\n%b</span>"
 
 [ignore]
     appname = Konsole
