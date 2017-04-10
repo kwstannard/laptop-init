@@ -52,12 +52,12 @@ Alt_L
       # Use Mouse+$mod to drag floating windows to their wanted position
       floating_modifier $mod
 
-      set $current_workspace "
-        $(i3-msg -t get_workspaces |
-          jq -r '.[] | "\(.name) \(.focused)"' |
-          grep true |
-          sed 's/ \w*$//')
-      "
+      #set $current_workspace "
+        # $(i3-msg -t get_workspaces |
+          #jq -r '.[] | "\(.name) \(.focused)"' |
+          #grep true |
+          #sed 's/ \w*$//')
+      #"
       BASE
     end
 
@@ -179,6 +179,7 @@ Alt_L
       exec --no-startup-id pidgin
 
       exec --no-startup-id konsole --profile work_console
+      exec --no-startup-id cron_notify_setup
 
       #screensaver + lock on screen saver
       exec_always --no-startup-id xautolock -time 15 -locker custom_lock
@@ -308,18 +309,17 @@ Alt_L
       bindings.add("5", "workspace #{@id}9")
 
       # move focused container to workspace
-      bindings.add("Shift+1", "workspace #{@id}5")
-      bindings.add("Shift+2", "workspace #{@id}6")
-      bindings.add("Shift+3", "workspace #{@id}7")
-      bindings.add("Shift+4", "workspace #{@id}8")
-      bindings.add("Shift+5", "workspace #{@id}9")
+      bindings.add("Shift+1", "move container to workspace #{@id}5")
+      bindings.add("Shift+2", "move container to workspace #{@id}6")
+      bindings.add("Shift+3", "move container to workspace #{@id}7")
+      bindings.add("Shift+4", "move container to workspace #{@id}8")
+      bindings.add("Shift+5", "move container to workspace #{@id}9")
 
       bindings.add(
         "minus",
         "mode \"default\"; workspace 1;"\
         "exec --no-startup-id rm ~/.current_config.sh"
       )
-      "echo #{name} > ~/.current_config.sh"
 
       self.class.common_binds.each{|key,action| bindings.add(key, action) }
 
