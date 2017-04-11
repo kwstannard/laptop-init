@@ -1,0 +1,3 @@
+#! /usr/bin/env sh
+
+i3-msg "rename workspace $(current_workspace) to temporary; rename workspace $1 to $(current_workspace); rename workspace temporary to $1; workspace $1"

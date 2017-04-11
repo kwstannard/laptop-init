@@ -33,12 +33,33 @@ cookbook_file File.join(node[:home], ".config", "dunst", "dunstrc") do
   source 'dunstrc'
 end
 
-cookbook_file File.join(node[:home], "bin", "cron_env_setup") do
+cookbook_file File.join(node[:home], "bin", "current_workspace") do
   owner node[:user]
   group node[:group]
-  source 'cron_env_setup'
-  mode '755'
+  source 'current_workspace'
+  mode '0755'
 end
+
+cookbook_file File.join(node[:home], "bin", "swap_workspace") do
+  owner node[:user]
+  group node[:group]
+  source 'swap_workspace'
+  mode '0755'
+end
+
+cookbook_file File.join(node[:home], "bin", "custom_i3status") do
+  owner node[:user]
+  group node[:group]
+  source 'custom_i3status'
+  mode '0755'
+end
+
+#cookbook_file File.join(node[:home], "bin", "cron_env_setup") do
+  #owner node[:user]
+  #group node[:group]
+  #source 'cron_env_setup'
+  #mode '0755'
+#end
 
 directory File.join(node[:home], ".config", "i3status") {
   recursive true

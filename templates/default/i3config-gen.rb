@@ -153,7 +153,7 @@ Alt_L
       # finds out, if available)
       bar {
         workspace_buttons no
-              status_command i3status
+              status_command custom_i3status
               bindsym button1 nop
               bindsym button2 nop
               bindsym button3 nop
@@ -302,18 +302,10 @@ Alt_L
       @var = "$mode_" + name.downcase.tr(" ", "_")
 
       bindings = BindingSet.new
-      bindings.add("1", "workspace #{@id}5")
-      bindings.add("2", "workspace #{@id}6")
-      bindings.add("3", "workspace #{@id}7")
-      bindings.add("4", "workspace #{@id}8")
-      bindings.add("5", "workspace #{@id}9")
-
-      # move focused container to workspace
-      bindings.add("Shift+1", "move container to workspace #{@id}5")
-      bindings.add("Shift+2", "move container to workspace #{@id}6")
-      bindings.add("Shift+3", "move container to workspace #{@id}7")
-      bindings.add("Shift+4", "move container to workspace #{@id}8")
-      bindings.add("Shift+5", "move container to workspace #{@id}9")
+      (1..5).each do |i|
+        bindings.add(i, "workspace #{@id}#{i + 4}")
+        bindings.add("Shift+#{i}", "exec --no-startup-id swap_workspace #{@id}#{i+4}")
+      end
 
       bindings.add(
         "minus",
@@ -371,12 +363,12 @@ Alt_L
     bindings.add("4", "workspace 4")
     bindings.add("5", "workspace 5")
 
-    # move focused container to workspace
-    bindings.add("Shift+1", "workspace 1")
-    bindings.add("Shift+2", "workspace 2")
-    bindings.add("Shift+3", "workspace 3")
-    bindings.add("Shift+4", "workspace 4")
-    bindings.add("Shift+5", "workspace 5")
+    # swap workspaces
+    bindings.add("Shift+1", "exec --no-startup-id swap_workspace 1")
+    bindings.add("Shift+2", "exec --no-startup-id swap_workspace 2")
+    bindings.add("Shift+3", "exec --no-startup-id swap_workspace 3")
+    bindings.add("Shift+4", "exec --no-startup-id swap_workspace 4")
+    bindings.add("Shift+5", "exec --no-startup-id swap_workspace 5")
 
     Methods.common_binds.each{|key,action| bindings.add(key, action) }
 
