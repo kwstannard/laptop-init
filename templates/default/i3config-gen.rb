@@ -153,7 +153,7 @@ Alt_L
       # finds out, if available)
       bar {
         workspace_buttons no
-              status_command custom_i3status
+              status_command i3status
               bindsym button1 nop
               bindsym button2 nop
               bindsym button3 nop
@@ -280,6 +280,26 @@ Alt_L
 
   end
 
+  class Workspace < Struct.new(:key, :id)
+    def add_bindings_to(binding_set)
+      binding_set.add(*switch_to)
+      binding_set.add(*swap_with)
+      binding_set.add(*move_to)
+    end
+
+    def switch_to
+      [key, "workspace #{id}"]
+    end
+
+    def swap_with
+      ["Shift+#{key}", "exec --no-startup-id swap_workspace #{id}"]
+    end
+
+    def move_to
+      ["Control+#{key}", "move window to workspace #{id}"]
+    end
+  end
+
   class ProjectMode < Methods
     @@count = 0
     @@projects = []
@@ -303,8 +323,7 @@ Alt_L
 
       bindings = BindingSet.new
       (1..5).each do |i|
-        bindings.add(i, "workspace #{@id}#{i + 4}")
-        bindings.add("Shift+#{i}", "exec --no-startup-id swap_workspace #{@id}#{i+4}")
+        Workspace.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
       end
 
       bindings.add(
