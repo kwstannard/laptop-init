@@ -1,3 +1,4 @@
+node.default["ruby_build"]["upgrade"] = true
 include_recipe 'ruby_build'
 execute "Install ruby-build" do
   action :run

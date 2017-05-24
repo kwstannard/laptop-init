@@ -10,7 +10,6 @@
 
 include_recipe 'desktop::user'
 include_recipe 'desktop::fonts'
-#require 'pry'; binding.pry
 include_recipe 'dropbox'
 include_recipe 'desktop::apt'
 include_recipe 'desktop::tar'
@@ -23,8 +22,8 @@ include_recipe 'desktop::ssh'
 include_recipe 'desktop::synaptics'
 
 ## TODO make sure correct 4.12 installs
-include_recipe 'laptop-init::i3'
 #include_recipe 'laptop-init::prax'
+#include_recipe 'laptop-init::libxrandr'
 
 ##DONE
 #include_recipe 'laptop-init::firefox'
@@ -43,6 +42,7 @@ include_recipe 'laptop-init::oracle_instant_client'
 include_recipe 'laptop-init::stuff_for_monitors'
 include_recipe 'laptop-init::tmux'
 include_recipe 'laptop-init::keepassx'
+include_recipe 'laptop-init::i3'
 
 package [ # base packages
   'xbacklight',
@@ -55,7 +55,6 @@ package [ # base packages
   'pavucontrol',
   'chromium',
   'pciutils',
-#  'kde-plasma-netbook',
 ]
 
 package [ #work packages
