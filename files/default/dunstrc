@@ -1,5 +1,5 @@
 [global]
-    font = Monospace 12
+    font = Monospace 18
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -182,7 +182,7 @@
 [urgency_normal]
     background = "#184557"
     foreground = "#ffffff"
-    timeout = 20
+    timeout = 60
 
 [urgency_critical]
     background = "#900000"
@@ -224,6 +224,16 @@
 [ignore]
     appname = Konsole
     format = ""
+
+[rspec-guard-pass]
+    summary = "*RSpec results*"
+    icon = "*success.png"
+    background = "#00ff00"
+
+[rspec-guard-fail]
+    summary = "RSpec results"
+    icon = "*failed.png"
+    background = "#ff0000"
 
 #[ignore]
 #    # This notification will not be displayed

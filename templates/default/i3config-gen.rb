@@ -280,7 +280,7 @@ Alt_L
 
   end
 
-  class Workspace < Struct.new(:key, :id)
+  class Project < Struct.new(:key, :id)
     def add_bindings_to(binding_set)
       binding_set.add(*switch_to)
       binding_set.add(*swap_with)
@@ -323,7 +323,7 @@ Alt_L
 
       bindings = BindingSet.new
       (1..5).each do |i|
-        Workspace.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
+        Project.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
       end
 
       bindings.add(
