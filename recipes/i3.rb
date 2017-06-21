@@ -40,6 +40,13 @@ cookbook_file File.join(node[:home], "bin", "current_workspace") do
   mode '0755'
 end
 
+cookbook_file File.join(node[:home], "bin", "special_mode_exit") do
+  owner node[:user]
+  group node[:group]
+  source 'i3-special_mode_exit'
+  mode '0755'
+end
+
 cookbook_file File.join(node[:home], "bin", "swap_workspace") do
   owner node[:user]
   group node[:group]

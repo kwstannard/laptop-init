@@ -13,9 +13,15 @@ Alt_L
 
     def self.keys
       `xmodmap -pk`.lines
-        .map{|l| l.match(/\((.*?)\)/)&.[](1)}
+        .map{ |l|
+          l.match(/\((.*?)\)/)&.[]1
+        }
         .compact.uniq
-        .reject{|l| modifiers.include?(l)}
+        .reject{|m| modifiers.include?(m)}
+    end
+
+    def self.special_mode_exit
+      "exec --no-startup-id special_mode_exit"
     end
 
     def self.base
@@ -83,8 +89,9 @@ Alt_L
           bindsym Right resize grow width 10 px or 10 ppt
 
       # back to normal: Enter or Escape
-          bindsym Return mode "default"
-          bindsym Escape mode "default"
+          bindsym Shift+Escape mode "default"
+          bindsym Return #{special_mode_exit}
+          bindsym Escape #{special_mode_exit}
       }
 
       set $mode_movement Movement
@@ -102,22 +109,24 @@ Alt_L
         bindsym $mod+Right move right
 
           # back to normal: Enter or Escape
-          bindsym Return mode "default"
-          bindsym Escape mode "default"
+          bindsym Shift+Escape mode "default"
+          bindsym Return #{special_mode_exit}
+          bindsym Escape #{special_mode_exit}
       }
 
       set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
       mode "$mode_system" {
-        bindsym l exec --no-startup-id custom_locker, mode "default"
-          bindsym e exec --no-startup-id i3msg exit, mode "default"
-          bindsym s exec --no-startup-id custom_locker && systemctl suspend, mode "default"
-          bindsym h exec --no-startup-id custom_locker && systemctl hibernate, mode "default"
-          bindsym r exec --no-startup-id systemctl reboot, mode "default"
-          bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+        bindsym l exec --no-startup-id custom_locker, #{special_mode_exit}
+          bindsym e exec --no-startup-id i3msg exit, #{special_mode_exit}
+          bindsym s exec --no-startup-id custom_locker && systemctl suspend, #{special_mode_exit}
+          bindsym h exec --no-startup-id custom_locker && systemctl hibernate, #{special_mode_exit}
+          bindsym r exec --no-startup-id systemctl reboot, #{special_mode_exit}
+          bindsym Shift+s exec --no-startup-id systemctl poweroff, #{special_mode_exit}
 
           # back to normal: Enter or Escape
-          bindsym Return mode "default"
-          bindsym Escape mode "default"
+          bindsym Shift+Escape mode "default"
+          bindsym Return #{special_mode_exit}
+          bindsym Escape #{special_mode_exit}
       }
       MODES
     end
@@ -280,7 +289,7 @@ Alt_L
 
   end
 
-  class Project < Struct.new(:key, :id)
+  class Workspace < Struct.new(:key, :id)
     def add_bindings_to(binding_set)
       binding_set.add(*switch_to)
       binding_set.add(*swap_with)
@@ -288,7 +297,7 @@ Alt_L
     end
 
     def switch_to
-      [key, "workspace #{id}"]
+      [key, "workspace #{id}; exec --no-startup-id echo #{id} > ~/.i3_workspace"]
     end
 
     def swap_with
@@ -323,7 +332,7 @@ Alt_L
 
       bindings = BindingSet.new
       (1..5).each do |i|
-        Project.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
+        Workspace.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
       end
 
       bindings.add(
@@ -345,6 +354,7 @@ Alt_L
     def binding
       "bindsym #{@keys} mode \"#{@var}\";"\
         "workspace #{@id}5;"\
+        "exec --no-startup-id echo #{name} > ~/.i3_project;"\
         "exec --no-startup-id ln -sf ~/.config/i3/#{name}_config.sh ~/.current_config.sh"
     end
 
@@ -393,6 +403,7 @@ Alt_L
 
     min = 1; max = 5
     (min..max).each{|i| ProjectMode.new("Project_#{max - i}", "$mod+#{(11 - i) % 10}")}
+
 
     Methods.base + Methods.modes + ProjectMode.text + bindings.to_config + Methods.function_key_binds + Methods.other
   end
