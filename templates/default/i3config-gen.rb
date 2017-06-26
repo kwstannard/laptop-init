@@ -13,9 +13,7 @@ Alt_L
 
     def self.keys
       `xmodmap -pk`.lines
-        .map{ |l|
-          l.match(/\((.*?)\)/)&.[]1
-        }
+        .map{ |l| Array(l.match(/\((.*?)\)/))&.[](1) }
         .compact.uniq
         .reject{|m| modifiers.include?(m)}
     end
@@ -192,6 +190,7 @@ Alt_L
 
       #screensaver + lock on screen saver
       exec_always --no-startup-id xautolock -time 15 -locker custom_lock
+
       OTHER
       #assign [class="Korganizer"] 101: Calendar
       #exec --no-startup-id korganizer
@@ -209,11 +208,11 @@ Alt_L
 
         # start dmenu (a program launcher)
         # "d" => "exec dmenu_run",
-        "Shift+d" => "split toggle; exec dmenu_run; split toggle",
+        "Shift+a" => "split toggle; exec dmenu_run; split toggle",
         # There also is the (new) i3-dmenu-desktop which only displays applications
         # shipping a .desktop file. It is a wrapper around dmenu, so you need that
         # installed.
-        "d" => "exec --no-startup-id i3-dmenu-desktop",
+        "a" => "exec --no-startup-id i3-dmenu-desktop",
 
         # change focus
         "h" => "focus left",
@@ -235,12 +234,12 @@ Alt_L
         "b" => "split t",
 
         # enter fullscreen mode for the focused container
-        "f" => "fullscreen",
+        "Shift+f" => "fullscreen",
 
         # change container layout (stacked, tabbed, toggle split)
-        "s" => "layout stacking",
-        "w" => "layout tabbed",
-        "e" => "layout toggle split",
+        #"s" => "layout stacking",
+        #"w" => "layout tabbed",
+        #"e" => "layout toggle split",
 
         # toggle tiling / floating
         "Shift+space" => "floating toggle",
@@ -249,16 +248,16 @@ Alt_L
         "space" => "focus mode_toggle",
 
         # focus the parent container
-        "a" => "focus parent",
+        #"a" => "focus parent",
 
         # focus the child container
         #"d" => "focus child",
 
-        "backslash" => "workspace 100: WorkConsole",
-        "p" => "workspace 14: Firefox",
-        "o" => "workspace 13: Slack",
-        "i" => "workspace 12: Pidgin",
-        "Shift+u" => "workspace 11: Keepass",
+        "backslash" => Goto("100: WorkConsole"),
+        "p" => Goto("14: Firefox"),
+        "o" => Goto("13: Slack"),
+        "i" => Goto("12: Pidgin"),
+        "Shift+u" => Goto("11: Keepass"),
 
         "u" => <<~KPDM,
         exec --no-startup-id i3exec keepass-dmenu \
@@ -297,7 +296,7 @@ Alt_L
     end
 
     def switch_to
-      [key, "workspace #{id}; exec --no-startup-id echo #{id} > ~/.i3_workspace"]
+      [key, Goto(id)]
     end
 
     def swap_with
@@ -319,27 +318,24 @@ Alt_L
     end
 
     def self.text
-      bindings = @@projects.map(&:binding).join("\n")
-      @@projects.map{|p| p.text(bindings)}.join("\n\n")
+      @@projects.map{|p| p.text}.join("\n\n")
     end
 
     attr_accessor :name
     def initialize(name, keys)
       self.name = name
-      @id = @@count
+      @workspace_group = @@count
       @keys = keys
       @var = "$mode_" + name.downcase.tr(" ", "_")
 
       bindings = BindingSet.new
       (1..5).each do |i|
-        Workspace.new(i, "#{@id}#{i + 4}").add_bindings_to(bindings)
+        Workspace.new(i, "#{@workspace_group}#{i + 4}").add_bindings_to(bindings)
       end
 
-      bindings.add(
-        "minus",
-        "mode \"default\"; workspace 1;"\
-        "exec --no-startup-id rm ~/.current_config.sh"
-      )
+      bindings.add("d", "workspace #{@workspace_group}5")
+      bindings.add("f", "workspace #{@workspace_group}4")
+      bindings.add("s", "workspace #{@workspace_group}2")
 
       self.class.common_binds.each{|key,action| bindings.add(key, action) }
 
@@ -351,18 +347,22 @@ Alt_L
       MODE
     end
 
-    def binding
+    def global_binding
       "bindsym #{@keys} mode \"#{@var}\";"\
-        "workspace #{@id}5;"\
+        "#{Goto("#{@workspace_group}5")};"\
         "exec --no-startup-id echo #{name} > ~/.i3_project;"\
         "exec --no-startup-id ln -sf ~/.config/i3/#{name}_config.sh ~/.current_config.sh"
     end
 
-    def text(insert)
+    def text
       @text + "\n" +
-        insert.lines.join("  ") +
+        "  " + (self.class.global_bindings).lines.join("  ") +
         "\n}\n" +
-        binding + "\n"
+        global_binding + "\n"
+    end
+
+    def self.global_bindings
+      @@projects.map(&:global_binding).join("\n")
     end
   end
 
@@ -384,27 +384,18 @@ Alt_L
   end
 
   def self.call
-    #base bindings
     bindings = BindingSet.new
-    bindings.add("1", "workspace 1")
-    bindings.add("2", "workspace 2")
-    bindings.add("3", "workspace 3")
-    bindings.add("4", "workspace 4")
-    bindings.add("5", "workspace 5")
-
-    # swap workspaces
-    bindings.add("Shift+1", "exec --no-startup-id swap_workspace 1")
-    bindings.add("Shift+2", "exec --no-startup-id swap_workspace 2")
-    bindings.add("Shift+3", "exec --no-startup-id swap_workspace 3")
-    bindings.add("Shift+4", "exec --no-startup-id swap_workspace 4")
-    bindings.add("Shift+5", "exec --no-startup-id swap_workspace 5")
-
     Methods.common_binds.each{|key,action| bindings.add(key, action) }
+
+    ProjectMode.new("environment", "$mod+minus")
 
     min = 1; max = 5
     (min..max).each{|i| ProjectMode.new("Project_#{max - i}", "$mod+#{(11 - i) % 10}")}
 
-
     Methods.base + Methods.modes + ProjectMode.text + bindings.to_config + Methods.function_key_binds + Methods.other
   end
 end
+
+  def Goto(workspace)
+    "workspace #{workspace}; exec --no-startup-id echo #{workspace} > ~/.i3_workspace"
+  end
